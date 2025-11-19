@@ -1,0 +1,31 @@
+// The configuration for the app module
+apply plugin: 'com.android.application'
+
+android {
+    namespace 'com.nextgen'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.nextgen.webview"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.9.0'
+    // Add other necessary dependencies here if needed, but none are required for a simple WebView
+}
