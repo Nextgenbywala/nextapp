@@ -1,0 +1,28 @@
+- name: Set up JDK 17
+    uses: actions/setup-java@v4
+    with:
+      distribution: 'temurin'
+      java-version: '17'
+
+  - name: Set up Android SDK
+    uses: android-actions/setup-android@v2
+
+  - name: Grant execute permission for gradlew
+    run: chmod +x gradlew
+
+  - name: Clean and Build Release APK
+    run: ./gradlew assembleRelease
+
+  - name: Find APK file path
+    id: find_apk
+    run: echo "APK_PATH=$(find app/build/outputs/apk/release -name 'app-release-unsigned.apk' | head -n 1)" >> $GITHUB_OUTPUT
+
+  - name: Upload Release APK as Artifact
+    uses: actions/upload-artifact@v4
+    with:
+      name: Nextgen-Android-App-APK
+      path: ${{ steps.find_apk.outputs.APK_PATH }}
+      retention-days: 7
+      
+  - name: Provide Download Link for User (Optional)
+    run: echo "::notice title=APK Build Success::The APK file is ready! Go to the 'Artifacts' section of this workflow run to download the file named Nextgen-Android-App-APK."
